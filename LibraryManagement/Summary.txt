@@ -1,0 +1,64 @@
+Below is a revision sheet for the Library Management LLD.
+You should be able to recall the entire design from this.
+
+Problem Goal
+
+Design a system where:
+
+Books exist as metadata
+Multiple physical copies exist
+Members can issue and return books
+Fine is calculated for late return
+System can search books
+Clean separation of concerns
+
+
+Core Design Insight (very important)
+Book is not what gets issued. BookCopy gets issued.
+
+This is the main modeling point most candidates miss.
+
+Entities
+Class	Responsibility
+Book	Metadata (isbn, title, author)
+BookCopy	Physical copy, availability
+Member	Library user
+Loan	Issue record (who, which copy, when)
+Catalog	Search and store book copies
+FineStrategy	Calculate fine (Strategy pattern)
+LibraryService	Orchestrates issue/return
+
+
+
+Flow — Issue Book
+Member requests ISBN
+ → LibraryService asks Catalog for copies
+ → Finds available BookCopy
+ → Marks copy unavailable
+ → Creates Loan entry
+ → Stores in activeLoans map
+
+
+
+Flow — Return Book
+Member returns copyId
+ → LibraryService finds Loan
+ → Marks BookCopy available
+ → Removes Loan
+ → FineStrategy calculates fine
+
+
+Design Patterns Used
+Where	Pattern	Why
+Fine calculation	Strategy	Fine rules can change
+Catalog	Separation	Search separated from service
+Loan	Record pattern	Issue tracking
+Service layer	Facade/Orchestrator	Central logic
+
+
+
+
+Important Data Structures
+Map<String, List<BookCopy>>  // in Catalog (isbn → copies)
+
+Map<String, Loan>            // activeLoans (copyId → loan)
