@@ -1,0 +1,61 @@
+✅ Correct UML Structure (what interviewer expects)
+Coin (enum)
++ ONE, TWO, FIVE, TEN, TWENTY
+- value
++ getValue()
+
+Item
+- id
+- name
+- price
+
+Inventory
+- Map<Integer, Item> items
+- Map<Integer, Integer> stock
++ isAvailable()
++ reduceStock()
++ getItem()
+
+MachineState (State pattern)
++ insertCoin(vm, coin)
++ selectItem(vm, itemId)
++ dispense(vm)
++ cancel(vm)
+
+Implementations
+IdleState
+HasMoneyState
+DispenseState
+
+ProductSelectionStrategy
++ selectItem(inventory, itemId)
+
+ChangeReturnStrategy
++ returnChange(balance, coinInventory)
+
+VendingMachine (brain)
+- MachineState state
+- Inventory inventory
+- balance
+- selectedItemId
+- Map<Coin, Integer> coinInventory
+- ProductSelectionStrategy
+- ChangeReturnStrategy
+
+Why this is SDE-2
+
+You show:
+
+Proper State pattern (no enums)
+
+Two Strategy patterns
+
+Correct inventory modeling
+
+Machine as controller
+
+What you should say at end in interview
+
+After implementing State pattern, I see two extensibility points: product selection and change return, which I can model using Strategy pattern.
+
+That is the missing “end part”.
