@@ -1,0 +1,94 @@
+✅ Final Parking Lot UML
+
+1. VehicleType (Enum)
++ BIKE
++ CAR
++ TRUCK
+
+No price here.
+
+2. Vehicle
+- regNo : String
+- type  : VehicleType
++ getters
+
+
+3. Slot
+- id : int
+- supportedType : VehicleType
+- currentVehicle : Vehicle
++ isFree() : boolean
++ parkVehicle(Vehicle)
++ vacate()
+
+Slot knows which vehicle is parked.
+
+4. Floor
+- slots : List<Slot>
++ getSlots()
+
+
+5. ParkingLot (DATA ONLY)
+- floors : List<Floor>
++ getFloors()
+
+❌ No park/unpark here.
+
+6. Ticket (DATA ONLY)
+- ticketId : String
+- vehicle  : Vehicle
+- slot     : Slot
+- entryTime : LocalDateTime
++ getters
+
+❌ No price calculation here.
+
+7. SlotChoosingStrategy (Strategy)
++ findSlot(ParkingLot, VehicleType) : Slot
+
+Implementation
+NearestSlotStrategy
+RandomSlotStrategy
+
+
+8. PricingStrategy (Strategy)
++ calculatePrice(duration, VehicleType) : double
+
+Implementation
+NormalPricingStrategy
+WeekendPricingStrategy
+
+
+9. ParkingService (Singleton — BRAIN)
+- parkingLot : ParkingLot
+- slotStrategy : SlotChoosingStrategy
+- pricingStrategy : PricingStrategy
+- activeTickets : Map<String, Ticket>
+
++ park(Vehicle) : Ticket
++ unpark(ticketId) : double
+
+This class does all decisions.
+
+Relationships (very important to say while drawing)
+ParkingService uses ParkingLot
+ParkingService uses SlotChoosingStrategy
+ParkingService uses PricingStrategy
+ParkingService creates Ticket
+Ticket references Slot and Vehicle
+Floor contains Slots
+ParkingLot contains Floors
+
+What you say after drawing
+ParkingLot and Ticket are pure data holders.
+All decision making happens in ParkingService using strategies for slot selection and pricing.
+That sentence is gold.
+
+Memory Trick
+Vehicle → Slot → Floor → ParkingLot   (structure)
+
+Ticket → parking event record
+
+Strategies → pluggable rules
+
+ParkingService → brain
