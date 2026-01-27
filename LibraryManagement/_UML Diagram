@@ -1,0 +1,99 @@
+✅ Final Library Management UML (SDE-2)
+1. Book (metadata only)
+Book
+----------------
+- isbn : String
+- title : String
+- author : String
++ getters
+
+
+Book never moves. It is only metadata.
+
+2. BookCopy (physical copy)
+BookCopy
+----------------
+- copyId : String
+- book : Book
+- isAvailable : boolean
++ issue()
++ return()
++ isAvailable()
+
+
+This is what gets issued.
+
+3. User
+User
+----------------
+- id : String
+- name : String
++ getters
+
+
+User does not track issued books.
+
+4. Loan (most important entity)
+Loan
+----------------
+- copy : BookCopy
+- user : User
+- issueDate : LocalDate
++ getters
+
+
+Tracks lifecycle of issue/return.
+
+5. Catalog (search component)
+Catalog
+----------------
+- Map<String, List<BookCopy>>  // isbn → copies
++ addBookCopy(BookCopy)
++ searchByIsbn(String isbn) : List<BookCopy>
+
+
+Separates search from business logic.
+
+6. FineStrategy (Strategy pattern)
+FineStrategy
+----------------
++ calculateFine(LocalDate issueDate) : double
+
+Implementation
+DefaultFineStrategy
+WeekendFineStrategy (optional)
+
+7. LibraryService (brain / orchestrator)
+LibraryService
+----------------
+- catalog : Catalog
+- activeLoans : Map<String, Loan>   // copyId → loan
+- fineStrategy : FineStrategy
+
++ issueBook(isbn, user) : Loan
++ returnBook(copyId) : double
+
+
+All decisions happen here.
+
+Relationships (say this while drawing)
+
+BookCopy references Book
+
+Loan references BookCopy and User
+
+Catalog stores BookCopy
+
+LibraryService uses Catalog and FineStrategy
+
+LibraryService creates and removes Loan
+
+10-second explanation you should give
+
+Book is metadata, BookCopy is the physical entity that gets issued, Loan tracks the lifecycle, Catalog handles search, and LibraryService orchestrates issue/return using a pluggable FineStrategy.
+
+Memory Hook
+Book → BookCopy → Loan → LibraryService
+
+
+This is the correct mental chain.
