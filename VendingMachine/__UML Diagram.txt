@@ -74,6 +74,8 @@ public class VendingMachine {
     public Map<Coin, Integer> getCoinInventory()
     public void setSelectedProduct(int id)
     public int getSelectedProductId()
+
+    // StateMachine functions which will be called from Main.java
     public synchronized void insertCoin(Coin coin)
     public synchronized void selectProduct(int id)
     public synchronized void dispense()
