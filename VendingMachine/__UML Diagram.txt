@@ -42,6 +42,56 @@ VendingMachine (brain)
 - ProductSelectionStrategy
 - ChangeReturnStrategy
 
+
+
+
+
+public class VendingMachine {
+    private State state;
+    private int balance;
+    private final Inventory inventory;
+    private final ProductSelectionStrategy selectionStrategy;
+    private final ChangeReturnStrategy changeStrategy;
+    private final Map<Coin, Integer> coinInventory = new HashMap<>();
+    private int selectedProductId;
+
+    public VendingMachine(Inventory inventory, ProductSelectionStrategy selectionStrategy, ChangeReturnStrategy changeStrategy) {
+        this.inventory = inventory;
+        this.selectionStrategy = selectionStrategy;
+        this.changeStrategy = changeStrategy;
+        this.state = new IdleState();
+        for (Coin c : Coin.values()) {
+            coinInventory.put(c, 10); // initial coins
+        }
+    }
+
+    public synchronized void addBalance(int amount)
+    public synchronized int getBalance()
+    public synchronized void resetBalance()
+    public Inventory getInventory()
+    public ProductSelectionStrategy getSelectionStrategy()
+    public ChangeReturnStrategy getChangeStrategy()
+    public Map<Coin, Integer> getCoinInventory()
+    public void setSelectedProduct(int id)
+    public int getSelectedProductId()
+    public synchronized void insertCoin(Coin coin)
+    public synchronized void selectProduct(int id)
+    public synchronized void dispense()
+    public void setState(State state)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 Why this is SDE-2
 
 You show:
