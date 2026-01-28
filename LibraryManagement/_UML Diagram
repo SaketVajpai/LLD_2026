@@ -33,7 +33,7 @@ User
 
 User does not track issued books.
 
-4. Loan (most important entity)
+4. Loan/IssuedBook (most important entity)
 Loan
 ----------------
 - copy : BookCopy
